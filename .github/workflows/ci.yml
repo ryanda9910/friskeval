@@ -1,0 +1,33 @@
+name: ci
+on: [push, pull_request]
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [20, 22, 24]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      # friskeval is zero-dep: nothing to install. Assert the exit-code contract
+      # in BOTH directions — a harness that cannot fail proves nothing.
+      - name: clean skill set exits 0
+        run: node scripts/friskeval.js examples/skills.json
+
+      - name: colliding skill set exits 1
+        run: |
+          if node scripts/friskeval.js examples/cases.json; then
+            echo "::error::expected a non-zero exit on the colliding fixture"
+            exit 1
+          fi
+
+      - name: key-free demo runs clean
+        run: node examples/demo.mjs
