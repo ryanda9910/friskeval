@@ -1,0 +1,86 @@
+[
+  {
+    "skill": "patdown",
+    "positive": [
+      {"prompt": "I finished the feature, check my diff for security issues before I call it done"},
+      {"prompt": "audit the changed code for secrets injection and broken authz"},
+      {"prompt": "pat down this change for path traversal and unsafe eval before shipping"}
+    ],
+    "negative": [
+      {"prompt": "update the architecture diagram in the docs"},
+      {"prompt": "did I add tests for the new branch I just wrote"}
+    ]
+  },
+  {
+    "skill": "gatefrisk",
+    "positive": [
+      {"prompt": "check my new route handlers for missing auth before I ship"},
+      {"prompt": "did I leave a mutating endpoint ungated on the public internet"},
+      {"prompt": "frisk the API for delete and pay endpoints with no auth check"}
+    ],
+    "negative": [
+      {"prompt": "review my hooks for commands that run on untrusted input"},
+      {"prompt": "scan my env vars for leaked secrets"}
+    ]
+  },
+  {
+    "skill": "hookfrisk",
+    "positive": [
+      {"prompt": "check my agent hooks for commands that auto-run on untrusted input"},
+      {"prompt": "does my hook pipe tool output into a shell — is that RCE"},
+      {"prompt": "frisk the hook definition for curl bash on every trigger"}
+    ],
+    "negative": [
+      {"prompt": "check my HTTP routes for missing auth gates"},
+      {"prompt": "find new logic in my diff with no test"}
+    ]
+  },
+  {
+    "skill": "testfrisk",
+    "positive": [
+      {"prompt": "did I add a test for the new branch I just wrote before saying done"},
+      {"prompt": "coverage says 90% but is the if I just added actually tested"},
+      {"prompt": "find new logic in my diff that ships with no test touching it"}
+    ],
+    "negative": [
+      {"prompt": "check my changed routes for missing authorization"},
+      {"prompt": "audit my diff for hardcoded secrets and injection"}
+    ]
+  },
+  {
+    "skill": "envxray",
+    "positive": [
+      {"prompt": "did I commit a dotenv file or leak a key into client code"},
+      {"prompt": "scan my environment variables for secrets that will leak in logs"},
+      {"prompt": "check my gitignore covers env files before I push"}
+    ],
+    "negative": [
+      {"prompt": "review my hooks for unsafe auto-run commands"},
+      {"prompt": "did I test the new code path"}
+    ]
+  },
+  {
+    "skill": "mcpfrisk",
+    "positive": [
+      {"prompt": "scan this MCP server tool definitions for prompt injection before I connect"},
+      {"prompt": "check the tool descriptions for hidden instructions and data exfiltration"},
+      {"prompt": "is this MCP tool schema poisoned"}
+    ],
+    "negative": [
+      {"prompt": "check my HTTP endpoints for missing auth"},
+      {"prompt": "did I add tests for the new function"}
+    ]
+  },
+  {
+    "skill": "agentfrisk",
+    "positive": [
+      {"prompt": "check my agent config for over-broad permissions before I run it"},
+      {"prompt": "does my agent auto-approve too many tools — least privilege check"},
+      {"prompt": "frisk the allowed tools list for unsafe access"}
+    ],
+    "negative": [
+      {"prompt": "scan MCP tool definitions for prompt injection"},
+      {"prompt": "check my routes for ungated mutations"}
+    ]
+  }
+]
